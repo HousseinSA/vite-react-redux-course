@@ -1,0 +1,170 @@
+body {
+  font-family: sans-serif;
+  /* background: #181818; */
+  background: gray;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.main {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+.task-col {
+  background: rgb(160, 159, 159);
+  color: white;
+  max-width: 20rem;
+  width: 33%;
+  min-height: 20rem;
+  padding: 0.5rem;
+  border: 1px transparent solid;
+}
+
+.task {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 5rem;
+  background: white;
+  color: black;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  margin: 0.5rem;
+  cursor: move;
+}
+.head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-items: justify-between;
+}
+.bottom {
+  display: flex;
+
+  justify-content: space-between;
+}
+.task-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.status {
+  font-size: small;
+  background: teal;
+  padding: 0.2rem 0.4rem;
+  color: white;
+}
+
+.modal-container {
+  background: #685959;
+  z-index: 20;
+  position: absolute;
+  top: 50%;
+  left: 45%;
+  padding: 1.2rem;
+  border-radius: 1rem;
+
+  width: 20rem;
+  height: 20rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  height: full;
+  justify-content: center;
+  align-items: center;
+}
+.modal-input {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.modal-input input {
+  padding: 0.5rem 0.2rem;
+  border: none;
+  outline: none;
+}
+
+/* Redux project */
+.post-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+form {
+  display: flex;
+  width: 60%;
+  height: 100%;
+  margin: 1rem auto;
+  gap: 0.5rem;
+  flex-direction: column;
+  height: 100%;
+}
+
+form input,
+textarea {
+  outline: none;
+  width: 100%;
+  padding: 0.5rem 0.2rem;
+  border: none;
+}
+button {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+.posts-list {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.post-item {
+  display: flex;
+  margin: 0.5rem auto;
+  width: 60%;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid darkblue;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+.post-content h3 {
+  color: azure;
+}
+span {
+  font-size: 0.8rem;
+  /* color: gray; */
+}
+.post-content {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.8rem;
+}
+
+.user {
+  display: flex;
+  gap: 0.2rem;
+  width: 100%;
+  align-items: center;
+}
+.user-form {
+  width: 100%;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
