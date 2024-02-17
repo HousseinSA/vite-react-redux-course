@@ -8,6 +8,7 @@ import {
   getPostsError,
   getPostsStatus,
   fetchPosts,
+  addNewPost,
 } from "./postsSlice"
 
 import { useEffect, useState } from "react"
@@ -20,28 +21,40 @@ const PostsContainer = () => {
   const [edit, setEdit] = useState(false)
   const [id, setID] = useState("")
   const [userId, setUserId] = useState("")
+  const [addReqeustStatus, setAddRequestStatus] = useState("idle")
+  const canSave =
+    [title, body, userId].every(Boolean) && addReqeustStatus === "idle"
   const posts = useSelector(selectAllPosts)
   const [reactions, setReactions] = useState({})
   const ordredPosts = posts.slice().sort((a, b) => b.date.localeCompare(a.date))
   const dispatch = useDispatch()
   const postError = useSelector(getPostsError)
   const postStatus = useSelector(getPostsStatus)
-  // users
+  // users data
   const users = useSelector(allUsers)
   const userStatus = useSelector(getStatus)
   const userError = useSelector(getError)
-
   useEffect(() => {
     if (postStatus === "idle") {
       dispatch(fetchPosts())
     }
   }, [postStatus, dispatch])
+
+  console.log(addReqeustStatus, canSave)
   const handleForm = (event) => {
     event.preventDefault()
     if (edit) {
       dispatch(editPost({ id, title, body, userId, reactions }))
     } else {
-      dispatch(addPost(title, body, userId))
+      // dispatch(addPost(title, body, Number(userId)))
+      try {
+        setAddRequestStatus("loading")
+        dispatch(addNewPost({ title, body, userId }))
+      } catch (error) {
+        console.log("failed to add post")
+      } finally {
+        setAddRequestStatus("idle")
+      }
     }
     setTitle("")
     setBody("")
@@ -58,7 +71,7 @@ const PostsContainer = () => {
   const handelDelete = (title) => {
     dispatch(removePost(title))
   }
-  // console.log(posts)
+  console.log("ordered posts", ordredPosts)
   return (
     <div className="post-container">
       <form onSubmit={handleForm} className="post-form">
@@ -73,7 +86,7 @@ const PostsContainer = () => {
           {userStatus === "loading" && "loading"}
           {userStatus === "failed" && { userError }}
           {userStatus === "success" &&
-            users.map((user) => {
+            users?.map((user) => {
               return (
                 <option key={user.id} value={user.id}>
                   {user.name}
@@ -91,7 +104,9 @@ const PostsContainer = () => {
           rows="10"
           placeholder="message"
         ></textarea>
-        <button type="submit">{edit ? "Edit post" : "Add Post"}</button>
+        <button type="submit" disabled={!canSave}>
+          {edit ? "Edit post" : "Add Post"}
+        </button>
         <button onClick={() => dispatch(clear())}>Clear All Posts</button>
       </form>
       {postStatus === "loading" && <div>Loading...</div>}

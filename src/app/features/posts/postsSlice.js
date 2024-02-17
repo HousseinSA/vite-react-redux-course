@@ -6,11 +6,22 @@ const POSTUrl = "https://jsonplaceholder.typicode.com/posts"
 export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
   try {
     const response = await axios.get(POSTUrl)
-    return [...response.data]
+    return response.data
   } catch (error) {
     return error.message
   }
 })
+export const addNewPost = createAsyncThunk(
+  "posts/addNewPosts",
+  async (initialPost) => {
+    try {
+      const response = await axios.post(POSTUrl, initialPost)
+      return response.data
+    } catch (error) {
+      return error.message
+    }
+  }
+)
 const postsSlice = createSlice({
   name: "posts",
   initialState: {
@@ -22,7 +33,6 @@ const postsSlice = createSlice({
     addPost: {
       reducer(state, action) {
         state.posts.push(action.payload)
-        console.log(action.payload)
       },
       prepare(title, body, userId) {
         return {
@@ -51,7 +61,9 @@ const postsSlice = createSlice({
     },
     editPost: (state, action) => {
       state.posts = state.posts.map((post) =>
-        post.id === action.payload.id ? { ...action.payload } : post
+        post.id === action.payload.id
+          ? { ...action.payload, userId: Number(action.payload.userId) }
+          : post
       )
     },
     reactionAdded: (state, action) => {
@@ -87,6 +99,19 @@ const postsSlice = createSlice({
       })
       .addCase(fetchPosts.rejected, (state, action) => {
         return state.status === "failed"
+      })
+      .addCase(addNewPost.fulfilled, (state, action) => {
+        action.payload.userId = Number(action.payload.userId)
+        action.payload.date = new Date().toISOString()
+        action.payload.reactions = {
+          thumpUP: 0,
+          wow: 0,
+          heart: 0,
+          rocket: 0,
+          coffee: 0,
+        }
+        console.log(action.payload)
+        state.posts.push(action.payload)
       })
   },
 })
