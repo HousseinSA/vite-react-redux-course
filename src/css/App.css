@@ -1,15 +1,15 @@
-body {
+/* body {
   font-family: sans-serif;
   /* background: #181818; */
-  background: gray;
-}
+/* background: gray; */
+/* } */
 
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
-.main {
+/* .main {
   display: flex;
   gap: 2rem;
   width: 100%;
@@ -89,7 +89,7 @@ body {
   padding: 0.5rem 0.2rem;
   border: none;
   outline: none;
-}
+} */
 
 /* Redux project */
 .post-container {
@@ -112,12 +112,13 @@ form {
 }
 
 form input,
+select,
 textarea {
   outline: none;
   width: 100%;
-  padding: 0.5rem 0.2rem;
-  border: none;
+  padding: 0.8rem 0.2rem;
 }
+
 button {
   padding: 0.5rem;
   cursor: pointer;
@@ -167,4 +168,26 @@ span {
   display: flex;
   gap: 0.5rem;
   align-items: center;
+}
+
+header {
+  background: purple;
+  height: 4rem;
+  padding: 0.5rem 1rem;
+  display: flex;
+  font-family: sans-serif;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+.heder-logo {
+  font-size: 2rem;
+}
+.navbar {
+  display: flex;
+  list-style: none;
+  font-weight: bold;
+  gap: 0.5rem;
+  align-items: center;
+  cursor: pointer;
 }
