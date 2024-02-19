@@ -9,7 +9,6 @@ const ReactionButtons = ({ post }) => {
     rocket: "🚀",
     coffee: "☕",
   }
-
   return (
     <div>
       {Object.entries(reactionButton).map(([name, emoji]) => {

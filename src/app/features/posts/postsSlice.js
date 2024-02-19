@@ -69,6 +69,7 @@ const postsSlice = createSlice({
     reactionAdded: (state, action) => {
       const { postId, reaction } = action.payload
       const post = state.posts.find((post) => post.id === postId)
+
       if (post) {
         post.reactions[reaction]++
       }
@@ -84,7 +85,6 @@ const postsSlice = createSlice({
         // add time and reactions
         let min = 1
         const loadedPosts = action.payload.map((post) => {
-          post.id = nanoid()
           post.date = sub(new Date(), { minutes: min++ }).toISOString()
           post.reactions = {
             thumpUP: 0,
@@ -95,7 +95,7 @@ const postsSlice = createSlice({
           }
           return post
         })
-        state.posts = state.posts.concat(loadedPosts)
+        state.posts = loadedPosts
       })
       .addCase(fetchPosts.rejected, (state, action) => {
         return state.status === "failed"
@@ -110,7 +110,7 @@ const postsSlice = createSlice({
           rocket: 0,
           coffee: 0,
         }
-        console.log(action.payload)
+
         state.posts.push(action.payload)
       })
   },
@@ -122,6 +122,8 @@ export const getPostsStatus = (state) => state.posts.status
 export const getPostsError = (state) => state.posts.error
 
 export const getPostsById = (state, postId) => {
+  console.log(postId)
+  console.log(state.posts.posts)
   state.posts.posts.find((post) => post.id === postId)
 }
 export default postsSlice.reducer

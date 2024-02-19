@@ -23,7 +23,7 @@ const App = () => {
         <Route index element={<PostsContainer />} />
         <Route path="post">
           <Route index element={<PostForm />} />
-          <Route path=":postId" element={SinglePostPage} />
+          <Route path=":postId" element={<SinglePostPage />} />
         </Route>
       </Route>
     </Routes>

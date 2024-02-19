@@ -144,7 +144,7 @@ button {
   border-radius: 0.5rem;
 }
 .post-content h3 {
-  color: azure;
+  color: black;
 }
 span {
   font-size: 0.8rem;
@@ -190,4 +190,15 @@ header {
   gap: 0.5rem;
   align-items: center;
   cursor: pointer;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+.view {
+  color: blue;
+  text-decoration: underline;
+  font-weight: bold;
 }

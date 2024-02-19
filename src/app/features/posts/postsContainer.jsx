@@ -23,25 +23,25 @@ const PostsContainer = () => {
     }
   }, [postStatus, dispatch])
 
-  const handelDelete = (title) => {
-    dispatch(removePost(title))
+  const handelDelete = (id) => {
+    dispatch(removePost(id))
   }
-  console.log("ordered posts", ordredPosts)
+  console.log(ordredPosts)
   return (
     <div className="post-container">
       <h1 style={{ marginTop: "1rem", fontFamily: "sans-serif" }}>
         Create Post
       </h1>
-
       {postStatus === "loading" && <div>Loading...</div>}
       {postStatus === "failed" && <div>{postError}</div>}
       {postStatus === "success" &&
-        ordredPosts.map((post) => {
+        ordredPosts.map((post, index) => {
           return (
             <Post
-              key={post.id}
+              key={index}
               post={post}
               // edit={handelEdit}
+
               remove={handelDelete}
             />
           )

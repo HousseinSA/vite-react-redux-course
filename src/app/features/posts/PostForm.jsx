@@ -1,7 +1,8 @@
 import { useSelector, useDispatch } from "react-redux"
-import { addNewPost, clear, editPost } from "./postsSlice"
+import { addNewPost, clear, editPost, selectAllPosts } from "./postsSlice"
 import { useState } from "react"
 import { allUsers, getError, getStatus } from "../users/UsersSlice"
+import { useNavigate } from "react-router-dom"
 const PostForm = () => {
   const [addReqeustStatus, setAddRequestStatus] = useState("idle")
   const [title, setTitle] = useState("")
@@ -10,13 +11,12 @@ const PostForm = () => {
   const [userId, setUserId] = useState("")
   const [edit, setEdit] = useState(false)
   const [reactions, setReactions] = useState({})
-
+  const navigate = useNavigate()
   const canSave =
     [title, body, userId].every(Boolean) && addReqeustStatus === "idle"
   const users = useSelector(allUsers)
   const userStatus = useSelector(getStatus)
   const userError = useSelector(getError)
-
   const dispatch = useDispatch()
   const handleForm = (event) => {
     event.preventDefault()
@@ -27,6 +27,7 @@ const PostForm = () => {
       try {
         setAddRequestStatus("loading")
         dispatch(addNewPost({ title, body, userId }))
+        navigate("/")
       } catch (error) {
         console.log("failed to add post")
       } finally {
