@@ -6,7 +6,6 @@ import {
   getPostsStatus,
   fetchPosts,
 } from "./postsSlice"
-
 import { useEffect } from "react"
 import Post from "./post"
 const PostsContainer = () => {
@@ -26,7 +25,6 @@ const PostsContainer = () => {
   const handelDelete = (id) => {
     dispatch(removePost(id))
   }
-  console.log(ordredPosts)
   return (
     <div className="post-container">
       <h1 style={{ marginTop: "1rem", fontFamily: "sans-serif" }}>

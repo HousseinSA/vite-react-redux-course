@@ -28,6 +28,7 @@ const postsSlice = createSlice({
     posts: [],
     status: "idle",
     error: [],
+    editPost: false,
   },
   reducers: {
     addPost: {
@@ -74,6 +75,9 @@ const postsSlice = createSlice({
         post.reactions[reaction]++
       }
     },
+    editPostStatus: (state, action) => {
+      state.editPost = action.payload
+    },
   },
   extraReducers(builder) {
     builder
@@ -110,20 +114,25 @@ const postsSlice = createSlice({
           rocket: 0,
           coffee: 0,
         }
-
         state.posts.push(action.payload)
       })
   },
 })
-export const { addPost, removePost, clear, editPost, reactionAdded } =
-  postsSlice.actions
+export const {
+  addPost,
+  removePost,
+  clear,
+  editPost,
+  reactionAdded,
+  editPostStatus,
+} = postsSlice.actions
 export const selectAllPosts = (state) => state.posts.posts
 export const getPostsStatus = (state) => state.posts.status
 export const getPostsError = (state) => state.posts.error
-
-export const getPostsById = (state, postId) => {
-  console.log(postId)
-  console.log(state.posts.posts)
-  state.posts.posts.find((post) => post.id === postId)
+export const editStatus = (state) => state.posts.editPost
+// Selector to retrieve a post by ID
+export const getPostById = (postId) => (state) => {
+  return state.posts.posts.find((post) => post.id === postId)
 }
+
 export default postsSlice.reducer

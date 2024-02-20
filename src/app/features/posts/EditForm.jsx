@@ -5,16 +5,19 @@ import {
   editPost,
   editStatus,
   editPostStatus,
+  getPostById,
 } from "./postsSlice"
 import { useState } from "react"
 import { allUsers, getError, getStatus } from "../users/UsersSlice"
-import { useNavigate } from "react-router-dom"
-const PostForm = () => {
+import { useNavigate, useParams } from "react-router-dom"
+const EditForm = () => {
+  const { postId } = useParams()
+  const post = useSelector(getPostById(Number(postId)))
   const [addReqeustStatus, setAddRequestStatus] = useState("idle")
-  const [title, setTitle] = useState("")
-  const [body, setBody] = useState("")
-  const [id, setID] = useState("")
-  const [userId, setUserId] = useState("")
+  const [title, setTitle] = useState(post.title || "")
+  const [body, setBody] = useState(post.body || "")
+  const [id, setID] = useState(post.id || "")
+  const [userId, setUserId] = useState(post.userId || "")
 
   const [reactions, setReactions] = useState({})
   const navigate = useNavigate()
@@ -23,10 +26,12 @@ const PostForm = () => {
   const users = useSelector(allUsers)
   const userStatus = useSelector(getStatus)
   const userError = useSelector(getError)
+  const edStatus = useSelector(editStatus)
   const dispatch = useDispatch()
+  console.log(edStatus)
   const handleForm = (event) => {
     event.preventDefault()
-    if (editStatus) {
+    if (edStatus) {
       dispatch(editPost({ id, title, body, userId, reactions }))
       navigate("/")
     } else {
@@ -79,11 +84,11 @@ const PostForm = () => {
         placeholder="message"
       ></textarea>
       <button type="submit" disabled={!canSave}>
-        {editPostStatus ? "Edit post" : "Add Post"}
+        {edStatus ? "Edit post" : "Add Post"}
       </button>
       <button onClick={() => dispatch(clear())}>Clear All Posts</button>
     </form>
   )
 }
 
-export default PostForm
+export default EditForm
